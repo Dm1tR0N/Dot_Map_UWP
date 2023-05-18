@@ -3,16 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Dot_Map.Models;
@@ -71,7 +63,7 @@ namespace Dot_Map.Views
             {
                 ComboBoxItem selectedItem = rating.SelectedItem as ComboBoxItem;
                 string selectedValue = selectedItem?.Tag?.ToString();
-                AddReview_Func(userId, pointTag, reviewBox.Text, Convert.ToInt32(selectedValue));
+                _ = AddReview_Func(userId, pointTag, reviewBox.Text, Convert.ToInt32(selectedValue));
             }
             else
             {

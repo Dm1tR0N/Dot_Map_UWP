@@ -8,15 +8,25 @@ using Newtonsoft.Json;
 
 namespace Dot_Map.Servises
 {
+    /// <summary>
+    /// Сервис пользователей.
+    /// </summary>
     public class UserService
     {
         private HttpClient httpClient;
 
+        /// <summary>
+        /// Конструктор класса UserService.
+        /// </summary>
         public UserService()
         {
             httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Получает список пользователей.
+        /// </summary>
+        /// <returns>Список пользователей.</returns>
         public async Task<List<User>> GetUsers()
         {
             var response = await httpClient.GetAsync("http://localhost:5071/api/users");
@@ -28,5 +38,4 @@ namespace Dot_Map.Servises
             return users;
         }
     }
-
 }

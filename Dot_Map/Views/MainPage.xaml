@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Dot_Map"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:maps="using:Windows.UI.Xaml.Controls.Maps" xmlns:local1="using:Dot_Map.Views.UserContolls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -108,7 +108,7 @@
             <maps:MapControl x:Name="mapControl" MapElementClick="MapControl_MapElementClick"/>
         </Border>
         <StackPanel Orientation="Vertical" Grid.Row="2">
-            <local:NotificationControl x:Name="notificationControl" Visibility="Collapsed"/>
+            <local:NotificationControl  x:Name="notificationControl" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Page>

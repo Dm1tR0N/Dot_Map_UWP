@@ -168,7 +168,7 @@ namespace Dot_Map
                         Location = point,
                         NormalizedAnchorPoint = new Windows.Foundation.Point(0.5, 0.5),
                         Title = $"{place.Name}",
-                        Image = imageReference                  
+                        Image = imageReference
                     };
 
                     // Добавление метки на карту
@@ -286,13 +286,13 @@ namespace Dot_Map
             foreach (Review review in reviews)
             {
                 // Обработка отзыва
-                ListRewiev += $"{countReview+1}: {review.Comment}\n";
+                ListRewiev += $"{countReview + 1}: {review.Comment}\n";
                 countReview++;
                 rating += review.Rating;
-            }      
+            }
             if (countReview > 1)
-                notificationManager.ShowNotification("Отзывы", $"{ListRewiev}Рейтинг места: {CalculateAverage(rating, countReview)}\n" , GREEN_Notification); 
-            else if (countReview == 1) 
+                notificationManager.ShowNotification("Отзывы", $"{ListRewiev}Рейтинг места: {CalculateAverage(rating, countReview)}\n", GREEN_Notification);
+            else if (countReview == 1)
                 notificationManager.ShowNotification("Отзыв", ListRewiev, GREEN_Notification);
         }
 
@@ -380,7 +380,7 @@ namespace Dot_Map
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
             string searchQuery = searchTextBox.Text;
-            SearchCity(searchQuery, "simple");
+            _ = SearchCity(searchQuery, "simple");
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace Dot_Map
         private void signIn_OnClick(object sender, RoutedEventArgs e)
         {
             var frame = new Frame();
-            Sing sing= new Sing();
+            Sing sing = new Sing();
 
             frame.Navigate(typeof(Sing));
 
@@ -631,7 +631,7 @@ namespace Dot_Map
             base.OnNavigatedTo(e);
 
             if (UserManager.CurrentUser != null)
-                userId = UserManager.CurrentUser.Id;               
+                userId = UserManager.CurrentUser.Id;
         }
 
         /// <summary>
