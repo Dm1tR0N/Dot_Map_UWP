@@ -37,9 +37,15 @@
 
 ## Скриншоты
 
-![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/a5cc628e-dbea-461c-93a3-e9137c23e385 "Авторизация")
-![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/2509aa19-0274-44cc-b694-0fc7aad7de48 "Пример построения маршрута")
-![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/ca9aee54-e7a7-43f5-b151-75aed085e683 "Пример построения маршрута при нажатии на точку")
+- Авторизация
+  ![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/a5cc628e-dbea-461c-93a3-e9137c23e385 "Авторизация")
+- Пример построения маршрута
+  ![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/2509aa19-0274-44cc-b694-0fc7aad7de48 "Пример построения маршрута")
+- Пример построения маршрута при нажатии на точку
+  ![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/ca9aee54-e7a7-43f5-b151-75aed085e683 "Пример построения маршрута при нажатии на точку")
+- Создание отзыва
+  ![image](https://github.com/Dm1tR0N/Dot_Map_UWP/assets/79396738/d01b15d5-dcad-4d6c-9eb7-7188c357481b "Создание отзыва")
+
 
 
 
