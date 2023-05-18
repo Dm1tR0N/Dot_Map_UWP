@@ -45,6 +45,10 @@ namespace Dot_Map
                 notificationControl.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
             };
 
+            // Изменение цвета кнопки closeButton
+            Color darkerColor = Color.FromArgb((byte)(color.Color.A * 0.7), (byte)(color.Color.R * 0.7), (byte)(color.Color.G * 0.7), (byte)(color.Color.B * 0.7));
+            closeButton.Background = new SolidColorBrush(darkerColor);
+
             // Отображение контрола уведомления
             notificationControl.Visibility = Windows.UI.Xaml.Visibility.Visible;
 

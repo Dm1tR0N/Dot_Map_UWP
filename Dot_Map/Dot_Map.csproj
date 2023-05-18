@@ -119,20 +119,23 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\AddReview.xaml.cs">
+      <DependentUpon>AddReview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserManager.cs" />
-    <Compile Include="NotificationControl.xaml.cs">
+    <Compile Include="Views\UserControlls\NotificationControl.xaml.cs">
       <DependentUpon>NotificationControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NotificationManager.cs" />
+    <Compile Include="Views\UserControlls\NotificationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servises\UserService.cs" />
-    <Compile Include="Sing.xaml.cs">
+    <Compile Include="Views\Sing.xaml.cs">
       <DependentUpon>Sing.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -157,15 +160,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="NotificationControl.xaml">
+    <Page Include="Views\AddReview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sing.xaml">
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControlls\NotificationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Sing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

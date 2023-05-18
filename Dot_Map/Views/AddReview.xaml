@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="Dot_Map.Views.AddReview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dot_Map.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#a6cdab">
+        <Grid.Resources>
+            <SolidColorBrush x:Key="PrimaryColor" Color="#305c3f"/>
+            <SolidColorBrush x:Key="ButtonColor" Color="#085e17"/>
+            <SolidColorBrush x:Key="TextColor" Color="#fff"/>
+            <SolidColorBrush x:Key="ErrorColor" Color="Red"/>
+            <FontFamily x:Key="MainFontFamily">Srbija Sans</FontFamily>
+        </Grid.Resources>
+        <StackPanel VerticalAlignment="Center" Background="{StaticResource PrimaryColor}" CornerRadius="10" Margin="50">
+            <StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+                <TextBlock Text="Создание отзыва" HorizontalAlignment="Center" Margin="10" Foreground="{StaticResource TextColor}" FontSize="24" FontFamily="{StaticResource MainFontFamily}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Отзыв о месте:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="{StaticResource TextColor}" FontSize="17" FontFamily="{StaticResource MainFontFamily}"/>
+                    <TextBox x:Name="reviewBox" PlaceholderText="Прекрасное место, обязательно приду ещё раз!
+                     Максимум 500 символов" Margin="10" Background="#3ca444" Foreground="{StaticResource TextColor}" TextWrapping="Wrap" Width="350" MaxLength="500" TextChanged="reviewBox_TextChanged"/>
+                </StackPanel>
+                <TextBlock x:Name="messageLenght" Text="Ваш отзыв содержит 0 символов" Foreground="{StaticResource TextColor}" FontSize="18" HorizontalAlignment="Center" Margin="10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Оцените место:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="{StaticResource TextColor}" FontSize="17" FontFamily="{StaticResource MainFontFamily}"/>
+                    <ComboBox x:Name="rating" Background="#3ca444" Margin="10" HorizontalAlignment="Center" Width="345" VerticalAlignment="Center">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить отзыв" Click="AddReviewButton_Click" HorizontalAlignment="Center" Margin="10" Background="{StaticResource ButtonColor}" Foreground="{StaticResource TextColor}" FontFamily="{StaticResource MainFontFamily}"/>
+                <Button Content="Вернуться" Click="BackButton_Click" HorizontalAlignment="Center" Margin="10" Background="{StaticResource ButtonColor}" Foreground="{StaticResource TextColor}" FontFamily="{StaticResource MainFontFamily}"/>
+            </StackPanel>
+            <TextBlock x:Name="ErrorMessageTextBlock" Text="" Foreground="{StaticResource ErrorColor}" FontSize="18" HorizontalAlignment="Center" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</Page>

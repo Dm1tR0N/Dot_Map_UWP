@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
 using Windows.Services.Maps;
 using Windows.Storage.Streams;
-using Windows.UI.ViewManagement;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -16,6 +13,7 @@ using Windows.UI.Xaml.Navigation;
 using Dot_Map.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Dot_Map.Views;
 
 namespace Dot_Map
 {
@@ -35,15 +33,69 @@ namespace Dot_Map
         private NotificationManager notificationManager;
 
         // Цвета
-        public SolidColorBrush RED_Notification     = new SolidColorBrush( Color.FromArgb(125, 6, 16, 1) );
-        public SolidColorBrush GREEN_Notification   = new SolidColorBrush( Color.FromArgb(255, 48, 92, 63) );
-        public SolidColorBrush BLUE_Notification    = new SolidColorBrush( Color.FromArgb(44, 68, 100, 1) );
+        /// <summary>
+        /// Красный цвет.
+        /// </summary>
+        public SolidColorBrush RED_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 174, 16, 49));
+
+        /// <summary>
+        /// Зеленый цвет.
+        /// </summary>
+        public SolidColorBrush GREEN_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 48, 92, 63));
+
+        /// <summary>
+        /// Синий цвет.
+        /// </summary>
+        public SolidColorBrush BLUE_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 6, 77, 130));
+
+        /// <summary>
+        /// Желтый цвет.
+        /// </summary>
+        public SolidColorBrush YELLOW_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 255, 255, 0));
+
+        /// <summary>
+        /// Оранжевый цвет.
+        /// </summary>
+        public SolidColorBrush ORANGE_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 255, 165, 0));
+
+        /// <summary>
+        /// Фиолетовый цвет.
+        /// </summary>
+        public SolidColorBrush PURPLE_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 128, 0, 128));
+
+        /// <summary>
+        /// Бирюзовый цвет.
+        /// </summary>
+        public SolidColorBrush CYAN_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 0, 255, 255));
+
+        /// <summary>
+        /// Коричневый цвет.
+        /// </summary>
+        public SolidColorBrush BROWN_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 165, 42, 42));
+
+        /// <summary>
+        /// Розовый цвет.
+        /// </summary>
+        public SolidColorBrush PINK_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 255, 192, 203));
+
+        /// <summary>
+        /// Серый цвет.
+        /// </summary>
+        public SolidColorBrush GRAY_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 128, 128, 128));
+
+        /// <summary>
+        /// Лаймовый цвет.
+        /// </summary>
+        public SolidColorBrush LIME_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 0, 255, 0));
 
         // Хранение текущего местоположения
         public Geopoint myGeopoint;
 
         // Для хранения данных об авторезированном пользователе
-        public int userId;
+        public int userId = 0;
+
+        // Хранение последней просмотренной точки.
+        public int pointTag = 0;
 
         public MainPage()
         {
@@ -51,7 +103,7 @@ namespace Dot_Map
             mapControl.MapServiceToken = "35wISN8sOtCWorow7xE8~kFqkQNroOLGF4n0qIdTLfA~AqSmv4QThH7uxnbScEHHguCNdvVVsHlvfRiZzMqgtPJAAGrIlKaJn0SEKAMizS9q";
             SetCurrentLocation();
             mapControl.ZoomLevel = 12; // Установите желаемый уровень масштабирования карты
-            mapControl.Style = MapStyle.Road;
+            mapControl.Style = MapStyle.Aerial3DWithRoads;
             this.Loaded += MainPage_Loaded;
 
             geolocator = new Geolocator();
@@ -166,6 +218,7 @@ namespace Dot_Map
 
                                 // Построение маршрута
                                 await BuildRoute(mapIcon.Location);
+                                pointTag = Convert.ToInt32(mapIcon.Tag);
                             }
                             else
                             {
@@ -237,8 +290,10 @@ namespace Dot_Map
                 countReview++;
                 rating += review.Rating;
             }      
-            if (countReview > 1) { notificationManager.ShowNotification("Отзывы", $"{ListRewiev}Рейтинг места: {CalculateAverage(rating, countReview)}\n" , GREEN_Notification); }
-            else if (countReview == 1) { notificationManager.ShowNotification("Отзыв", ListRewiev, GREEN_Notification); }
+            if (countReview > 1)
+                notificationManager.ShowNotification("Отзывы", $"{ListRewiev}Рейтинг места: {CalculateAverage(rating, countReview)}\n" , GREEN_Notification); 
+            else if (countReview == 1) 
+                notificationManager.ShowNotification("Отзыв", ListRewiev, GREEN_Notification);
         }
 
         /// <summary>
@@ -576,7 +631,36 @@ namespace Dot_Map
             base.OnNavigatedTo(e);
 
             if (UserManager.CurrentUser != null)
-                userId = UserManager.CurrentUser.Id;           
+                userId = UserManager.CurrentUser.Id;               
+        }
+
+        /// <summary>
+        /// Обработчик события Click для кнопки добавления отзыва.
+        /// </summary>
+        /// <param name="sender">Источник события.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void AddReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (userId > 0 && pointTag != 0)
+            {
+                notificationManager.ShowNotification("Подсказка", $"Пользователь: {userId}, Объект: {pointTag}.", BLUE_Notification);
+
+                // Создаем объект с параметрами, которые нужно передать
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("userId", userId);
+                parameters.Add("pointTag", pointTag);
+
+                // Переходим в окно AddReview с передачей параметров
+                Frame.Navigate(typeof(AddReview), parameters);
+            }
+            else if (pointTag == 0)
+            {
+                notificationManager.ShowNotification("Подсказка", "Пожалуйста выберите объект.", BLUE_Notification);
+            }
+            else
+            {
+                notificationManager.ShowNotification("Подсказка", "Пожалуйста авторизируйтесь.", BLUE_Notification);
+            }
         }
     }
 }
