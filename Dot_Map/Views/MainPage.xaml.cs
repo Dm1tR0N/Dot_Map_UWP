@@ -32,6 +32,16 @@ namespace Dot_Map
         // Контроллер для уведомлений пользователю
         private NotificationManager notificationManager;
 
+
+        // Хранение текущего местоположения
+        public Geopoint myGeopoint;
+
+        // Для хранения данных об авторезированном пользователе
+        public int userId = 0;
+
+        // Хранение последней просмотренной точки.
+        public int pointTag = 0;
+
         // Цвета
         /// <summary>
         /// Красный цвет.
@@ -87,15 +97,6 @@ namespace Dot_Map
         /// Лаймовый цвет.
         /// </summary>
         public SolidColorBrush LIME_Notification = new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 0, 255, 0));
-
-        // Хранение текущего местоположения
-        public Geopoint myGeopoint;
-
-        // Для хранения данных об авторезированном пользователе
-        public int userId = 0;
-
-        // Хранение последней просмотренной точки.
-        public int pointTag = 0;
 
         public MainPage()
         {

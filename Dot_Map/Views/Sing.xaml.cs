@@ -5,6 +5,10 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Dot_Map.Models;
 using Dot_Map.Servises;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Net;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -84,6 +88,103 @@ namespace Dot_Map.Views
             Window.Current.Content = frame;
 
             Window.Current.Activate();
+        }
+
+        /// <summary>
+        /// Обработчик события нажатия кнопки Регистрация.
+        /// </summary>
+        /// <param name="sender">Объект, инициирующий событие</param>
+        /// <param name="e">Аргументы события</param>
+        private async void RegButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationStackPanel.Visibility = Visibility.Visible;
+            LoginStackPanel.Visibility = Visibility.Collapsed;
+            EmailTextBox.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Регистрирует нового пользователя путем отправки POST-запроса к API.
+        /// </summary>
+        /// <param name="username">Имя пользователя</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="email">Адрес электронной почты</param>
+        /// <returns>True, если регистрация прошла успешно; False, если пользователь с таким
+        private async Task<bool> RegisterUser(string username, string password, string email)
+        {
+            // Создание объекта HttpClient
+            using (HttpClient client = new HttpClient())
+            {
+                // URL адрес для отправки POST-запроса
+                string url = "http://localhost:5071/api/users";
+
+                // Создание объекта User для отправки
+                User newUser = new User()
+                {
+                    Username = username,
+                    Password = password,
+                    Email = email
+                };
+
+                // Преобразование объекта User в JSON-строку
+                string json = JsonConvert.SerializeObject(newUser);
+
+                // Создание контент-объекта с JSON-строкой
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                // Отправка POST-запроса
+                HttpResponseMessage response = await client.PostAsync(url, content);
+
+                // Проверка статуса ответа
+                if (response.IsSuccessStatusCode)
+                {
+                    return true; // Регистрация успешна
+                }
+                else if (response.StatusCode == HttpStatusCode.Conflict)
+                {
+                    return false; // Пользователь с таким логином уже существует
+                }
+                else
+                {
+                    return false; // Регистрация не удалась по другой причине
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обработчик события нажатия кнопки регистрации.
+        /// </summary>
+        /// <param name="sender">Объект, инициирующий событие</param>
+        /// <param name="e">Аргументы события</param>
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+            string email = EmailTextBox.Text;
+
+            bool isRegistered = await RegisterUser(username, password, email);
+
+            if (isRegistered)
+            {
+                RegistrationStackPanel.Visibility = Visibility.Collapsed;
+                LoginStackPanel.Visibility = Visibility.Visible;
+                EmailTextBox.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ErrorMessageTextBlock.Text = "Регистрация не удалась!";
+            }
+        }
+
+        /// <summary>
+        /// Обработчик события нажатия кнопки "Авторизироватся".
+        /// </summary>
+        /// <param name="sender">Объект, инициирующий событие</param>
+        /// <param name="e">Аргументы события</param>
+        private void LoginUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationStackPanel.Visibility = Visibility.Collapsed;
+            LoginStackPanel.Visibility = Visibility.Visible;
+            EmailTextBox.Visibility= Visibility.Collapsed;
         }
     }
 }

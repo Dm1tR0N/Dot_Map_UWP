@@ -12,10 +12,16 @@
         <StackPanel VerticalAlignment="Center" Background="#305c3f" CornerRadius="10" Margin="50">
             <TextBlock Text="Авторизация" HorizontalAlignment="Center" Margin="10" Foreground="#fff" FontSize="24" FontFamily="Srbija Sans"/>
             <TextBox x:Name="UsernameTextBox" PlaceholderText="Логин" Margin="10" Background="#3ca444" Foreground="#fff"/>
+            <TextBox x:Name="EmailTextBox" Visibility="Collapsed" PlaceholderText="Почта" Margin="10" Background="#3ca444" Foreground="#fff"/>
             <PasswordBox x:Name="PasswordBox" PlaceholderText="Пароль" Margin="10" Background="#3ca444" Foreground="#fff"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel x:Name="LoginStackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="Войти" Click="LoginButton_Click" HorizontalAlignment="Center" Margin="10" Background="#085e17" Foreground="#fff" FontFamily="Srbija Sans"/>
+                <Button Content="Регистрация" Click="RegButton_Click" HorizontalAlignment="Center" Margin="10" Background="#085e17" Foreground="#fff" FontFamily="Srbija Sans"/>
                 <Button Content="Вернутся" Click="back_Click" HorizontalAlignment="Center" Margin="10" Background="#085e17" Foreground="#fff" FontFamily="Srbija Sans"/>
+            </StackPanel>
+            <StackPanel x:Name="RegistrationStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed">
+                <Button Content="Зарегистрироватся" Click="RegisterButton_Click" HorizontalAlignment="Center" Margin="10" Background="#085e17" Foreground="#fff" FontFamily="Srbija Sans"/>
+                <Button Content="Авторизироватся" Click="LoginUpButton_Click" HorizontalAlignment="Center" Margin="10" Background="#085e17" Foreground="#fff" FontFamily="Srbija Sans"/>
             </StackPanel>
             <TextBlock x:Name="ErrorMessageTextBlock" Text="" Foreground="Red" HorizontalAlignment="Center" Margin="10"/>
         </StackPanel>
