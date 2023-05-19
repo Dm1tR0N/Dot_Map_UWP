@@ -25,5 +25,8 @@
             </StackPanel>
             <TextBlock x:Name="ErrorMessageTextBlock" Text="" Foreground="Red" HorizontalAlignment="Center" Margin="10"/>
         </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="2">
+            <local:NotificationControl  x:Name="notificationControl" Visibility="Collapsed"/>
+        </StackPanel>
     </Grid>
 </Page>

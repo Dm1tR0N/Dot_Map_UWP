@@ -14,6 +14,9 @@ using Dot_Map.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Dot_Map.Views;
+using Windows.Storage.Provider;
+using Windows.Networking.Connectivity;
+
 
 namespace Dot_Map
 {
@@ -31,7 +34,6 @@ namespace Dot_Map
 
         // Контроллер для уведомлений пользователю
         private NotificationManager notificationManager;
-
 
         // Хранение текущего местоположения
         public Geopoint myGeopoint;
@@ -120,13 +122,35 @@ namespace Dot_Map
             // Подписка на событие изменения местоположения
             geolocator.PositionChanged += Geolocator_PositionChanged;
 
-
             // Запуск получения местоположения
             GetLocation();
-            // menuGrid.SizeChanged += MenuGrid_SizeChanged;
-            //MenuGrid_SizeChanged();
+            // Загрузка всех меток
             LoadPlaces();
+            // Проверка интернет соединения
+            _ = CheckInternetConnection();
         }
+
+        /// <summary>
+        /// Проверяет доступность интернет-соединения и выводит уведомление с ошибкой, если соединение отсутствует.
+        /// </summary>
+        public async Task CheckInternetConnection()
+        {
+            while (true)
+            {
+                ConnectionProfile connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+
+                if (connectionProfile == null || connectionProfile.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.InternetAccess)
+                {
+                    // Интернет-соединение отсутствует
+                    string errorMessage = "Проверьте подключение к интернету.";
+                    notificationManager.ShowNotification("Ошибка", errorMessage, RED_Notification);
+                }
+
+                // Ожидание перед следующей проверкой (например, 5 секунд)
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+        }
+
 
         /// <summary>
         /// Метод для загрузки меток на карту.
@@ -178,7 +202,7 @@ namespace Dot_Map
             }
             catch (Exception ex)
             {
-                notificationManager.ShowNotification("Ошибка", $"Не удалось отобразить метку на карте.\n{ex.Message}", RED_Notification);
+                notificationManager.ShowNotification("Ошибка", $"Не удалось отобразить метки на карте.", RED_Notification);
             }
         }
 

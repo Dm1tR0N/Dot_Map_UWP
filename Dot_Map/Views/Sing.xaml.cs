@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Net;
+using Windows.UI.Xaml.Media;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -19,9 +20,11 @@ namespace Dot_Map.Views
     /// </summary>
     public sealed partial class Sing : Page
     {
+        private NotificationManager notificationManager;
         public Sing()
         {
             this.InitializeComponent();
+            notificationManager = new NotificationManager(notificationControl);
         }
 
         /// <summary>
@@ -32,19 +35,26 @@ namespace Dot_Map.Views
         /// <returns>Объект User, представляющий аутентифицированного пользователя. Если аутентификация не удалась, возвращает null.</returns>
         private async Task<User> AuthenticateUser(string username, string password)
         {
-            var userService = new UserService();
-            var users = await userService.GetUsers();
-
-            // Поиск пользователя с заданным именем пользователя
-            var user = users.FirstOrDefault(u => u.Username == username);
-
-            // Проверка пароля пользователя
-            if (user != null && user.Password == password)
+            try
             {
-                return user;
-            }
+                var userService = new UserService();
+                var users = await userService.GetUsers();
 
-            return null;
+                // Поиск пользователя с заданным именем пользователя
+                var user = users.FirstOrDefault(u => u.Username == username);
+
+                // Проверка пароля пользователя
+                if (user != null && user.Password == password)
+                {
+                    return user;
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -68,7 +78,7 @@ namespace Dot_Map.Views
             }
             else
             {
-                ErrorMessageTextBlock.Text = "Авторизация не удалась!";
+                notificationManager.ShowNotification("Ошибка", "Возможно сервер недоступен.", new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 174, 16, 49)));
             }
         }
 
@@ -111,42 +121,49 @@ namespace Dot_Map.Views
         /// <returns>True, если регистрация прошла успешно; False, если пользователь с таким
         private async Task<bool> RegisterUser(string username, string password, string email)
         {
-            // Создание объекта HttpClient
-            using (HttpClient client = new HttpClient())
+            try
             {
-                // URL адрес для отправки POST-запроса
-                string url = "http://localhost:5071/api/users";
-
-                // Создание объекта User для отправки
-                User newUser = new User()
+                // Создание объекта HttpClient
+                using (HttpClient client = new HttpClient())
                 {
-                    Username = username,
-                    Password = password,
-                    Email = email
-                };
+                    // URL адрес для отправки POST-запроса
+                    string url = "http://localhost:5071/api/users";
 
-                // Преобразование объекта User в JSON-строку
-                string json = JsonConvert.SerializeObject(newUser);
+                    // Создание объекта User для отправки
+                    User newUser = new User()
+                    {
+                        Username = username,
+                        Password = password,
+                        Email = email
+                    };
 
-                // Создание контент-объекта с JSON-строкой
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    // Преобразование объекта User в JSON-строку
+                    string json = JsonConvert.SerializeObject(newUser);
 
-                // Отправка POST-запроса
-                HttpResponseMessage response = await client.PostAsync(url, content);
+                    // Создание контент-объекта с JSON-строкой
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                // Проверка статуса ответа
-                if (response.IsSuccessStatusCode)
-                {
-                    return true; // Регистрация успешна
+                    // Отправка POST-запроса
+                    HttpResponseMessage response = await client.PostAsync(url, content);
+
+                    // Проверка статуса ответа
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return true; // Регистрация успешна
+                    }
+                    else if (response.StatusCode == HttpStatusCode.Conflict)
+                    {
+                        return false; // Пользователь с таким логином уже существует
+                    }
+                    else
+                    {
+                        return false; // Регистрация не удалась по другой причине
+                    }
                 }
-                else if (response.StatusCode == HttpStatusCode.Conflict)
-                {
-                    return false; // Пользователь с таким логином уже существует
-                }
-                else
-                {
-                    return false; // Регистрация не удалась по другой причине
-                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -171,7 +188,7 @@ namespace Dot_Map.Views
             }
             else
             {
-                ErrorMessageTextBlock.Text = "Регистрация не удалась!";
+                notificationManager.ShowNotification("Ошибка", "Регистрация не удалась!", new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 174, 16, 49)));
             }
         }
 
