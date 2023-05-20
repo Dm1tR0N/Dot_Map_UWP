@@ -36,10 +36,10 @@ namespace Dot_Map.Views
         {
             base.OnNavigatedTo(e);
 
-            // Проверяем, что переданы параметры
+            // Проверка, что переданы параметры
             if (e.Parameter is Dictionary<string, object> parameters)
             {
-                // Извлекаем значения переменных
+                // Извлекается значения переменных
                 if (parameters.TryGetValue("userId", out object userIdValue))
                 {
                     userId = (int)userIdValue;
@@ -158,6 +158,8 @@ namespace Dot_Map.Views
                 else
                 {
                     //notificationManager.ShowNotification("Ошибка при добавлении отзыва.", "Код ошибки: " + response.StatusCode, new SolidColorBrush(Windows.UI.ColorHelper.FromArgb(255, 174, 16, 49)));
+
+                    // Что бы это реализовать, нужно создать контролл в XAML объявить его в коде, тогда его можно будет вызвать.
                 }
             }
         }

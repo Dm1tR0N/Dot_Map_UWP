@@ -21,7 +21,7 @@ using Windows.Networking.Connectivity;
 namespace Dot_Map
 {
     /// <summary>
-    /// Пустая страница, которую можно использовать саму по себе или для перехода внутри фрейма.
+    /// Главная страница 
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -105,7 +105,7 @@ namespace Dot_Map
             this.InitializeComponent();
             mapControl.MapServiceToken = "35wISN8sOtCWorow7xE8~kFqkQNroOLGF4n0qIdTLfA~AqSmv4QThH7uxnbScEHHguCNdvVVsHlvfRiZzMqgtPJAAGrIlKaJn0SEKAMizS9q";
             SetCurrentLocation();
-            mapControl.ZoomLevel = 12; // Установите желаемый уровень масштабирования карты
+            mapControl.ZoomLevel = 12; // Уровень масштабирования карты
             mapControl.Style = MapStyle.Aerial3DWithRoads;
             this.Loaded += MainPage_Loaded;
 
@@ -237,8 +237,7 @@ namespace Dot_Map
                                 // Десериализация полученного JSON-ответа в объекты C#
                                 List<Review> reviews = JsonConvert.DeserializeObject<List<Review>>(responseContent);
 
-                                // Вывод информации о полученных отзывах или выполнение другой логики
-                                // Например, можно отобразить информацию в диалоговом окне или на другом элементе пользовательского интерфейса
+                                // Вывод информации о полученных отзывах
                                 ShowReviews(reviews);
 
                                 // Построение маршрута
@@ -266,7 +265,7 @@ namespace Dot_Map
         /// <param name="destination">Местоположение назначения</param>
         private async Task BuildRoute(Geopoint destination)
         {
-            // Получение координат начальной точки (можно использовать SearchCity или другой метод для ее получения)
+            // Получение координат начальной точки)
             Geopoint startPoint = myGeopoint;
 
             if (startPoint != null && destination != null)
@@ -330,7 +329,7 @@ namespace Dot_Map
         public double CalculateAverage(double sum, int count)
         {
             if (count == 0)
-                throw new ArgumentException("Count cannot be zero.");
+                throw new ArgumentException("Значение не может быть пустым.");
 
             double average = (double)sum / count;
             return average;
